@@ -33,4 +33,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	f, err := os.Create("first-post.html")
+
+	err = t.Execute(f, text)
+
+	if err != nil {
+		panic(err)
+	}
 }
