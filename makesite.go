@@ -5,11 +5,28 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"os"
+
+	md "github.com/JohannesKaufmann/html-to-markdown"
 )
 
 type Text struct {
 	Paragraph string
+}
+
+func generateMarkdown(html string) {
+	converter := md.NewConverter("", true, nil)
+
+	html = `<strong>Important</strong>`
+
+	markdown, err := converter.ConvertString(html)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	os.Create(markdown + ".md")
+
 }
 
 func generateHTML(contents []byte, name string) {
@@ -30,6 +47,7 @@ func generateHTML(contents []byte, name string) {
 	if err != nil {
 		panic(err)
 	}
+	generateMarkdown(name)
 }
 
 func main() {
